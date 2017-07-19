@@ -217,18 +217,64 @@ public class LinkedList {
         reverseUtil(next, current);
         return head;
     }
-    
+
+    public int getSize(){
+        if(head==null)
+            return 0;
+        int size = 1;
+        Node temp = head;
+        while(temp.next!=null){
+            size++;
+            temp = temp.next;
+        }
+        return size;
+    }
+
+    public void displaySize(){
+        System.out.println("The size of the Linked List is: "+getSize());
+    }
+
+    public void nFromLast(int n){
+        Node slow = head;
+        Node fast = head;
+        int i=0;
+        while(i<n-1){
+            if(fast.next==null){
+                System.out.println("Not enough elements in the list to find "+n+ "th element from last.");
+                return;
+            }else{
+                fast=fast.next;
+                i++;
+            }
+        }
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        System.out.println("Value at "+n+"th element from last is: "+slow.data);
+    }
+
+    public void displayMiddleElement(){
+        Node slow = head;
+        Node fast = head;
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        System.out.println("Middle element is: "+slow.data);
+    }
+
     public void sort(){
         
     }
 
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
-        int[] a = {1, 2, 3, 4, 5, 6};
+        int[] a = {1, 2};
         ll.appendArrayToFront(a);
         ll.displayList();
-        ll.reverseRecursive();
-        ll.displayList();
+        ll.displayMiddleElement();
+//        ll.displayList();
     }
 }
 
