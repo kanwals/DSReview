@@ -169,20 +169,6 @@ public class LinkedList {
         }
     }
 
-    public void displayList() {
-        if (head == null) {
-            System.out.println("The list is empty. Nothing to Display.");
-        } else {
-            System.out.println("The contents of the List are: ");
-            Node n = head;
-            while (n.next != null) {
-                System.out.print(n.data + "\t");
-                n = n.next;
-            }
-            System.out.println(n.data + "");
-        }
-    }
-    
     public void reverseIterative(){
         if(head == null || head.next == null){
             System.out.println("List reversed iteratively.");
@@ -254,27 +240,86 @@ public class LinkedList {
         System.out.println("Value at "+n+"th element from last is: "+slow.data);
     }
 
-    public void displayMiddleElement(){
+    public Node getMiddleElement(Node head){
+        if(head==null)
+            return null;
         Node slow = head;
-        Node fast = head;
+        Node fast = head.next;
         while(fast!=null && fast.next!=null){
             slow = slow.next;
             fast = fast.next.next;
         }
-        System.out.println("Middle element is: "+slow.data);
+        return slow;
     }
 
-    public void sort(){
-        
+    public void displayMiddleElement(){
+        System.out.println("Middle element is: "+getMiddleElement(head).data);
+    }
+
+    public Node sort(){
+       return mergeSort(head);
+    }
+
+    public Node sortedMerge(Node a, Node b){
+        Node result = null;
+
+        if(a == null)
+            return b;
+        if(b == null)
+            return a;
+
+        if(a.data <= b.data){
+            result = a;
+            result.next = sortedMerge(a.next, b);
+        } else {
+            result = b;
+            result.next = sortedMerge(a, b.next);
+        }
+        return result;
+    }
+
+    private Node mergeSort(Node head){
+        if (head == null || head.next == null){
+            return head;
+        } else {
+            Node mid = getMiddleElement(head);
+            Node nextOfMid = mid.next;
+
+            mid.next = null;
+
+            Node left = mergeSort(head);
+            Node right = mergeSort(nextOfMid);
+
+            Node sortedList = sortedMerge(left, right);
+            return sortedList;
+        }
+    }
+
+
+    /*
+    Displays until the null pointer is reached. Does not consider the head data member of Linked List class but rather uses the head pointer passed.
+     */
+    public void displayList(Node head){
+        if (head == null) {
+            System.out.println("The list is empty. Nothing to Display.");
+        } else {
+            System.out.println("The contents of the List are: ");
+            Node n = head;
+            while (n.next != null) {
+                System.out.print(n.data + "\t");
+                n = n.next;
+            }
+            System.out.println(n.data + "");
+        }
     }
 
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
-        int[] a = {1, 2};
+        int[] a = {1,-2,-3,4,5,-6,7,-8};
         ll.appendArrayToFront(a);
-        ll.displayList();
-        ll.displayMiddleElement();
-//        ll.displayList();
+        ll.displayList(ll.head);
+        Node sortedListHead = ll.sort();
+        ll.displayList(sortedListHead);
     }
 }
 
