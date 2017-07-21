@@ -196,12 +196,11 @@ public class LinkedList {
         if(current.next == null){
             head = current;
             current.next = prev;
-            return null;
+            return head;
         }
         Node next = current.next;
         current.next = prev;
-        reverseUtil(next, current);
-        return head;
+        return reverseUtil(next, current);
     }
 
     public int getSize(){
@@ -318,8 +317,10 @@ public class LinkedList {
         int[] a = {1,-2,-3,4,5,-6,7,-8};
         ll.appendArrayToFront(a);
         ll.displayList(ll.head);
-        Node sortedListHead = ll.sort();
-        ll.displayList(sortedListHead);
+//        Node sortedListHead = ll.sort();
+//        ll.displayList(sortedListHead);
+        ll.reverseRecursive();
+        ll.displayList(ll.head);
     }
 }
 
