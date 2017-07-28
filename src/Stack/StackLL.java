@@ -1,13 +1,21 @@
 package Stack;
 
+import java.util.NoSuchElementException;
+
 /**
  * Created by Gurkanwal on 7/26/2017.
  */
 public class StackLL<T> {
     ListNode stackHead = null;
 
+    T peek(){
+        if(isEmpty())
+            throw new NoSuchElementException("Stack Underflow");
+        else return (T) stackHead.val;
+    }
+
     void push(T x){
-        if(stackHead == null){
+        if(isEmpty()){
             stackHead = new ListNode(x);
         }else{
             ListNode newHead = new ListNode(x);
@@ -17,9 +25,8 @@ public class StackLL<T> {
     }
 
     T pop(){
-        if(stackHead == null){
-            System.out.println("Stack Underflow");
-            return null;
+        if(isEmpty()){
+            throw new NoSuchElementException("Stack Underflow");
         }else{
             ListNode newHead = stackHead.next;
             T val = (T) stackHead.val;
