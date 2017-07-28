@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 /**
  * Created by Gurkanwal on 7/28/2017.
  */
-public class QueueLL {
+public class QueueLL<T> {
     ListNode front = null;
     ListNode rear = null;
     int len = 0;
@@ -19,10 +19,10 @@ public class QueueLL {
         return front == null;
     }
 
-    public int peek(){
+    public T peek(){
         if(isEmpty())
             throw new NoSuchElementException("Queue Underflow");
-        return front.val;
+        return (T) front.val;
     }
 
     public void enqueue(int data){
@@ -36,10 +36,10 @@ public class QueueLL {
         len++;
     }
 
-    public int dequeue(){
+    public T dequeue(){
         if(isEmpty())
             throw new NoSuchElementException("Queue Underflow");
-        int val = front.val;
+        T val = (T)front.val;
         if(front == rear){
             front = rear = null;
         } else
@@ -61,7 +61,7 @@ public class QueueLL {
     }
 
     public static void main(String[] args) {
-        QueueLL queue = new QueueLL();
+        QueueLL<Integer> queue = new QueueLL<Integer>();
         for (int i = 1; i < 11; i++) {
             queue.enqueue(i);
         }
@@ -77,11 +77,11 @@ public class QueueLL {
 
 }
 
-class ListNode{
+class ListNode<T>{
     ListNode next;
-    int val;
+    T val;
 
-    ListNode(int n){
+    ListNode(T n){
         val = n;
         next = null;
     }

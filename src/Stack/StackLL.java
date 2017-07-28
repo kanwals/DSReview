@@ -3,10 +3,10 @@ package Stack;
 /**
  * Created by Gurkanwal on 7/26/2017.
  */
-public class StackLL {
+public class StackLL<T> {
     ListNode stackHead = null;
 
-    void push(int x){
+    void push(T x){
         if(stackHead == null){
             stackHead = new ListNode(x);
         }else{
@@ -16,13 +16,13 @@ public class StackLL {
         }
     }
 
-    int pop(){
+    T pop(){
         if(stackHead == null){
             System.out.println("Stack Underflow");
-            return 0;
+            return null;
         }else{
             ListNode newHead = stackHead.next;
-            int val = stackHead.val;
+            T val = (T) stackHead.val;
             stackHead = newHead;
             return val;
         }
@@ -38,7 +38,7 @@ public class StackLL {
 
     public static void main(String[] args) {
         System.out.println("Pushing stuff...");
-        StackLL stack = new StackLL();
+        StackLL<Integer> stack = new StackLL<Integer>();
         for(int i=1;i<=10;i++){
             stack.push(i);
         }
@@ -55,11 +55,11 @@ public class StackLL {
     }
 }
 
-class ListNode{
+class ListNode<T>{
     ListNode next;
-    int val;
+    T val;
 
-    ListNode(int x){
+    ListNode(T x){
         val = x;
         next = null;
     }
