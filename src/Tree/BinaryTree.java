@@ -49,6 +49,73 @@ public class BinaryTree<T> {
         }
     }
 
+    void printLevelOrderInLevels(BinaryTreeNode root){
+        if (root == null)
+            return;
+        QueueLL<BinaryTreeNode> queue = new QueueLL<>();
+        queue.enqueue(root);
+
+        while(true){
+            int queueSize = queue.getCurrentLength();
+            if(queueSize == 0)
+                break;
+            while(queueSize>0){
+                BinaryTreeNode temp = queue.dequeue();
+                System.out.print(temp.data + " ");
+                if(temp.left!=null)
+                    queue.enqueue(temp.left);
+                if(temp.right!=null)
+                    queue.enqueue(temp.right);
+                queueSize--;
+            }
+            System.out.println();
+        }
+    }
+
+    void printTree(BinaryTreeNode root){
+        if (root == null)
+            return;
+
+        int height = getHeight(root);
+        int level = 1;
+        QueueLL<BinaryTreeNode> queue = new QueueLL<>();
+        queue.enqueue(root);
+
+        while(true){
+            boolean isSameLevel = false;
+            int queueSize = queue.getCurrentLength();
+            if(queueSize == 0)
+                break;
+            while(queueSize>0){
+                BinaryTreeNode temp = queue.dequeue();
+                for (int i = 0; i < Math.pow(2,height-1) && !isSameLevel; i++) {
+                    System.out.print("\t");
+                }
+                if((int)temp.data != -1111)
+                    System.out.print(temp.data);
+                else System.out.print(" ");
+                isSameLevel = true;
+                if(isSameLevel){
+                    for (int i = 0; i < Math.pow(2,height); i++) {
+                        System.out.print("\t");
+                    }
+                }
+                if(temp.left!=null)
+                    queue.enqueue(temp.left);
+                else if((int)temp.data != -1111) queue.enqueue(new BinaryTreeNode(-1111));
+//                else System.out.print("\t \t");
+                if(temp.right!=null)
+                    queue.enqueue(temp.right);
+                else if((int)temp.data != -1111) queue.enqueue(new BinaryTreeNode(-1111));
+//                else System.out.print("\t \t");
+                queueSize--;
+            }
+            height--;
+            level++;
+            System.out.println();
+        }
+    }
+
     void printGivenLevel(BinaryTreeNode root, int level){
         if(root == null){
             return;
@@ -67,12 +134,24 @@ public class BinaryTree<T> {
         tree.root.left = new BinaryTreeNode<>(2);
         tree.root.right = new BinaryTreeNode<>(3);
         tree.root.left.left = new BinaryTreeNode<>(4);
+        tree.root.left.right = new BinaryTreeNode<>(5);
+        tree.root.right.left = new BinaryTreeNode<>(6);
+        tree.root.right.right = new BinaryTreeNode<>(7);
+        tree.root.left.left.left = new BinaryTreeNode<>(8);
+        tree.root.left.left.right = new BinaryTreeNode<>(9);
+        tree.root.left.right.left = new BinaryTreeNode<>(10);
+//        tree.root.left.right.right = new BinaryTreeNode<>(11);
+//        tree.root.right.left.left = new BinaryTreeNode<>(12);
+//        tree.root.right.left.right = new BinaryTreeNode<>(13);
+//        tree.root.right.right.left = new BinaryTreeNode<>(14);
+        tree.root.right.right.right = new BinaryTreeNode<>(15);
 
-        System.out.println("Height of the Tree is: "+tree.getHeight(tree.root));
-        System.out.print("Level Order Traversal: "); tree.printLevelOrder(tree.root);
-        System.out.println();
-        System.out.print("Level Order Traversal using Queue: "); tree.printLevelOrderUsingQueue(tree.root);
-        System.out.println();
+//        System.out.println("Height of the Tree is: "+tree.getHeight(tree.root));
+//        System.out.print("Level Order Traversal: "); tree.printLevelOrder(tree.root);
+//        System.out.println();
+//        System.out.println("Level Order Traversal in Levels using Queue: "); tree.printLevelOrderInLevels(tree.root);
+//        System.out.println();
+        tree.printTree(tree.root);
     }
 }
 
