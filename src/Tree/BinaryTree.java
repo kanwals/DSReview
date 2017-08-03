@@ -129,6 +129,31 @@ public class BinaryTree<T> {
 
     }
 
+    void printInorder(BinaryTreeNode root){
+        if(root == null)
+            return;
+        printInorder(root.left);
+        System.out.print(root.data + " ");
+        printInorder(root.right);
+    }
+
+    void printPreOrder(BinaryTreeNode root){
+        if(root == null)
+            return;
+        System.out.print(root.data +" ");
+        printPreOrder(root.left);
+        printPreOrder(root.right);
+    }
+
+    void printPostOrder(BinaryTreeNode root){
+        if(root == null)
+            return;
+        printPostOrder(root.left);
+        printPostOrder(root.right);
+        System.out.print(root.data +" ");
+    }
+
+
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree<>(1);
         tree.root.left = new BinaryTreeNode<>(2);
@@ -140,10 +165,10 @@ public class BinaryTree<T> {
         tree.root.left.left.left = new BinaryTreeNode<>(8);
         tree.root.left.left.right = new BinaryTreeNode<>(9);
         tree.root.left.right.left = new BinaryTreeNode<>(10);
-//        tree.root.left.right.right = new BinaryTreeNode<>(11);
-//        tree.root.right.left.left = new BinaryTreeNode<>(12);
-//        tree.root.right.left.right = new BinaryTreeNode<>(13);
-//        tree.root.right.right.left = new BinaryTreeNode<>(14);
+        tree.root.left.right.right = new BinaryTreeNode<>(11);
+        tree.root.right.left.left = new BinaryTreeNode<>(12);
+        tree.root.right.left.right = new BinaryTreeNode<>(13);
+        tree.root.right.right.left = new BinaryTreeNode<>(14);
         tree.root.right.right.right = new BinaryTreeNode<>(15);
 
 //        System.out.println("Height of the Tree is: "+tree.getHeight(tree.root));
@@ -152,6 +177,11 @@ public class BinaryTree<T> {
 //        System.out.println("Level Order Traversal in Levels using Queue: "); tree.printLevelOrderInLevels(tree.root);
 //        System.out.println();
         tree.printTree(tree.root);
+        tree.printInorder(tree.root);
+        System.out.println();
+        tree.printPreOrder(tree.root);
+        System.out.println();
+        tree.printPostOrder(tree.root);
     }
 }
 
