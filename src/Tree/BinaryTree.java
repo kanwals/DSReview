@@ -1,6 +1,7 @@
 package Tree;
 
 import Queue.QueueLL;
+import Stack.StackLL;
 
 /**
  * Created by Gurkanwal on 8/2/2017.
@@ -129,12 +130,12 @@ public class BinaryTree<T> {
 
     }
 
-    void printInorder(BinaryTreeNode root){
+    void printInOrder(BinaryTreeNode root){
         if(root == null)
             return;
-        printInorder(root.left);
+        printInOrder(root.left);
         System.out.print(root.data + " ");
-        printInorder(root.right);
+        printInOrder(root.right);
     }
 
     void printPreOrder(BinaryTreeNode root){
@@ -151,6 +152,25 @@ public class BinaryTree<T> {
         printPostOrder(root.left);
         printPostOrder(root.right);
         System.out.print(root.data +" ");
+    }
+
+    void printInOrderWithoutRecusion(BinaryTreeNode root){
+        if(root == null)
+            return;
+        BinaryTreeNode node = root;
+        StackLL<BinaryTreeNode> stack = new StackLL<BinaryTreeNode>();
+        while(true){
+            while(node != null){
+                stack.push(node);
+                System.out.print(stack.peek().data + " ");
+                node = node.left;
+            }
+            while(node == null && !stack.isEmpty()){
+                node = stack.pop().right;
+            }
+            if(node == null && stack.isEmpty())
+                break;
+        }
     }
 
 
@@ -177,11 +197,13 @@ public class BinaryTree<T> {
 //        System.out.println("Level Order Traversal in Levels using Queue: "); tree.printLevelOrderInLevels(tree.root);
 //        System.out.println();
         tree.printTree(tree.root);
-        tree.printInorder(tree.root);
+        tree.printInOrder(tree.root);
         System.out.println();
         tree.printPreOrder(tree.root);
         System.out.println();
         tree.printPostOrder(tree.root);
+        System.out.println();
+        tree.printInOrderWithoutRecusion(tree.root);
     }
 }
 

@@ -8,13 +8,13 @@ import java.util.NoSuchElementException;
 public class StackLL<T> {
     ListNode stackHead = null;
 
-    T peek(){
+    public T peek(){
         if(isEmpty())
             throw new NoSuchElementException("Stack Underflow");
         else return (T) stackHead.val;
     }
 
-    void push(T x){
+    public void push(T x){
         if(isEmpty()){
             stackHead = new ListNode(x);
         }else{
@@ -24,7 +24,7 @@ public class StackLL<T> {
         }
     }
 
-    T pop(){
+    public T pop(){
         if(isEmpty()){
             throw new NoSuchElementException("Stack Underflow");
         }else{
@@ -35,7 +35,7 @@ public class StackLL<T> {
         }
     }
 
-    boolean isEmpty(){
+    public boolean isEmpty(){
         if(stackHead == null){
             return true;
         }else{
