@@ -1,17 +1,18 @@
 package LinkedList;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 /**
  *
  * @author Gurkanwal
  */
-public class LinkedList {
+public class LinkedList<T> {
 
-    private Node head = null;
+    public Node head = null;
 
-    public void appendToTail(int d) {
-        Node end = new Node(d);
+    public void appendToTail(Node head, T d) {
+        Node end = new Node<T>(d);
         if (head == null) {
             head = end;
         } else {
@@ -22,9 +23,10 @@ public class LinkedList {
             n.next = end;
         }
         System.out.println(d + " appended to the List's tail.");
+        this.head = head;
     }
 
-    public void deleteFromTail() {
+    public void deleteFromTail(Node head) {
         if (head == null) {
             System.out.println("Cannot delete from tail because there are no elements in the List. Underflow...");
         } else {
@@ -42,10 +44,11 @@ public class LinkedList {
                 System.out.println("Last element deleted.");
             }
         }
+        this.head = head;
     }
 
-    public void appendToFront(int d) {
-        Node start = new Node(d);
+    public Node appendToFront(Node head, T d) {
+        Node start = new Node<T>(d);
         if (head == null) {
             head = start;
         } else {
@@ -54,13 +57,16 @@ public class LinkedList {
             head = start;
         }
         System.out.println(d + " appended to the List's front.");
+        this.head = head;
+        return head;
     }
 
-    public void deleteFromFront() {
+    public T deleteFromFront(Node head) {
         if (head == null) {
-            System.out.println("Cannot delete from front because there are no elements in the List. Underflow...");
+            throw new NoSuchElementException("Cannot delete from front because there are no elements in the List. Underflow...");
         } else {
             Node n1 = head;
+            T data = (T) n1.data;
             Node n2 = head.next;
             if (n2 == null) {
                 head = null;
@@ -69,27 +75,29 @@ public class LinkedList {
                 head = n2;
                 System.out.println("First element deleted.");
             }
+            this.head = head;
+            return data;
         }
     }
 
-    public void appendArrayToFront(int[] a) {
+    public void appendArrayToFront(Node head, T[] a) {
         if (a.length == 0) {
-            System.out.println("Length of array should be greater than zero.");
+            throw new NoSuchElementException("Length of array should be greater than zero.");
         } else {
             if (head == null) {
-                head = new Node(a[0]);
+                head = new Node<T>(a[0]);
                 Node n = head;
                 for (int i = 1; i < a.length; i++) {
-                    Node p = new Node(a[i]);
+                    Node p = new Node<T>(a[i]);
                     n.next = p;
                     n = n.next;
                 }
             } else {
                 Node oldHead = head;
-                Node newHead = new Node(a[0]);
+                Node newHead = new Node<T>(a[0]);
                 Node n = newHead;
                 for (int i = 1; i < a.length; i++) {
-                    Node p = new Node(a[i]);
+                    Node p = new Node<T>(a[i]);
                     n.next = p;
                     n = n.next;
                 }
@@ -98,17 +106,18 @@ public class LinkedList {
             }
             System.out.println(Arrays.toString(a) + " appended to the List's front.");
         }
+        this.head = head;
     }
 
-    public void appendArrayToTail(int[] a) {
+    public void appendArrayToTail(Node head, T[] a) {
         if (a.length == 0) {
             System.out.println("Length of array should be greater than zero.");
         } else {
             if (head == null) {
-                head = new Node(a[0]);
+                head = new Node<T>(a[0]);
                 Node n = head;
                 for (int i = 1; i < a.length; i++) {
-                    Node p = new Node(a[i]);
+                    Node p = new Node<T>(a[i]);
                     n.next = p;
                     n = n.next;
                 }
@@ -118,26 +127,27 @@ public class LinkedList {
                     n = n.next;
                 }
                 for (int i = 0; i < a.length; i++) {
-                    Node p = new Node(a[i]);
+                    Node p = new Node<T>(a[i]);
                     n.next = p;
                     n = n.next;
                 }
             }
             System.out.println(Arrays.toString(a) + " appended to the List's tail.");
         }
+        this.head = head;
     }
 
-    public void deleteFirstOccurrence(int num) {
+    public void deleteFirstOccurrence(Node head, int num) {
         if (head == null) {
             System.out.println("List is empty. Cannot delete " + num);
         } else {
             Node n = head;
-            if (n.data == num) {
+            if ((int)n.data == num) {
                 head = n.next;
                 System.out.println("Number " + num + " found and deleted.");
             } else {
                 while (n.next != null) {
-                    if (n.next.data == num) {
+                    if ((int)n.next.data == num) {
                         n.next = n.next.next;
                         System.out.println("Number " + num + " found and deleted.");
                         break;
@@ -148,17 +158,17 @@ public class LinkedList {
         }
     }
 
-    public void deleteAllOccurrences(int num) {
+    public void deleteAllOccurrences(Node head, int num) {
         if (head == null) {
             System.out.println("List is empty. Cannot delete " + num);
         } else {
             Node n = head;
-            if (n.data == num) {
+            if ((int)n.data == num) {
                 head = n.next;
                 System.out.println("Number " + num + " found and deleted.");
             }
             while (n.next != null) {
-                if (n.next.data == num) {
+                if ((int)n.next.data == num) {
                     n.next = n.next.next;
                     System.out.println("Number " + num + " found and deleted.");
                     if(n.next == null)
@@ -169,7 +179,7 @@ public class LinkedList {
         }
     }
 
-    public void reverseIterative(){
+    public void reverseIterative(Node head){
         if(head == null || head.next == null){
             System.out.println("List reversed iteratively.");
             return;
@@ -267,7 +277,7 @@ public class LinkedList {
         if(b == null)
             return a;
 
-        if(a.data <= b.data){
+        if((int)a.data <= (int)b.data){
             result = a;
             result.next = sortedMerge(a.next, b);
         } else {
@@ -313,23 +323,23 @@ public class LinkedList {
     }
 
     public static void main(String[] args) {
-        LinkedList ll = new LinkedList();
-        int[] a = {1,-2,-3,4,5,-6,7,-8};
-        ll.appendArrayToFront(a);
+        LinkedList<Integer> ll = new LinkedList<Integer>();
+        Integer[] a = {1,-2,-3,4,5,-6,7,-8};
+        ll.appendArrayToFront(ll.head, a);
         ll.displayList(ll.head);
 //        Node sortedListHead = ll.sort();
 //        ll.displayList(sortedListHead);
-        ll.reverseRecursive();
-        ll.displayList(ll.head);
+//        ll.reverseRecursive();
+//        ll.displayList(ll.head);
     }
 }
 
-class Node {
+class Node<T> {
 
     Node next = null;
-    int data;
+    T data;
 
-    public Node(int d) {
+    public Node(T d) {
         data = d;
     }
 }
