@@ -22,26 +22,26 @@ public class LinkedList<T> {
             }
             n.next = end;
         }
-        System.out.println(d + " appended to the List's tail.");
+//        System.out.println(d + " appended to the List's tail.");
         this.head = head;
     }
 
     public void deleteFromTail(Node head) {
         if (head == null) {
-            System.out.println("Cannot delete from tail because there are no elements in the List. Underflow...");
+//            System.out.println("Cannot delete from tail because there are no elements in the List. Underflow...");
         } else {
             Node n1 = head;
             Node n2 = head.next;
             if (n2 == null) {
                 head = null;
-                System.out.println("Last element deleted. Linked List is now empty.");
+//                System.out.println("Last element deleted. Linked List is now empty.");
             } else {
                 while (n2.next != null) {
                     n1 = n1.next;
                     n2 = n2.next;
                 }
                 n1.next = null;
-                System.out.println("Last element deleted.");
+//                System.out.println("Last element deleted.");
             }
         }
         this.head = head;
@@ -56,7 +56,7 @@ public class LinkedList<T> {
             start.next = n;
             head = start;
         }
-        System.out.println(d + " appended to the List's front.");
+//        System.out.println(d + " appended to the List's front.");
         this.head = head;
         return head;
     }
@@ -334,12 +334,3 @@ public class LinkedList<T> {
     }
 }
 
-class Node<T> {
-
-    Node next = null;
-    T data;
-
-    public Node(T d) {
-        data = d;
-    }
-}
