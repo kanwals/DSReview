@@ -60,7 +60,7 @@ public class MergeSort {
             data[k++] = helper[i++];
         }
 
-        //NOT required though, as the upper half of the array is already at its correct posiyion
+        //NOT required though, as the upper half of the array is already at its correct position
         while (j <= high) {
             data[k++] = helper[j++];
         }

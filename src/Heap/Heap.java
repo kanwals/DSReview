@@ -110,19 +110,6 @@ public class Heap {
         System.out.println("\nHeap contents: " + Arrays.toString(this.H));
     }
 
-    private void checkPositive(int[] H){
-        for (int i = 0; i < H.length ; i++) {
-            if(H[i]<0)
-                throw new NumberFormatException("All elements in the Heap must be greater than Zero");
-        }
-    }
-
-    private int getTwosPower(int num){
-        int i;
-        for (i = 1; 2*i > num ; i++) {}
-        return i;
-    }
-
     public static void main(String[] args) {
         Heap heap = new Heap();
         for (int i = 0; i < 15 ; i++) {

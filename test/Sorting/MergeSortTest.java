@@ -32,7 +32,7 @@ public class MergeSortTest {
         System.out.println("MergeSort: " + elapsedTime);
 
         for (int i = 0; i < numbers.length - 1; i++) {
-            if (numbers[i] > numbers[i + 1]) {
+            if (numbers[i] > numbers[i + 1]) {  
                 fail("Should not happen");
             }
         }

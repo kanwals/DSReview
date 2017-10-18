@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 /**
- *
  * @author Gurkanwal
  */
 public class LinkedList<T> {
@@ -142,12 +141,12 @@ public class LinkedList<T> {
             System.out.println("List is empty. Cannot delete " + num);
         } else {
             Node n = head;
-            if ((int)n.data == num) {
+            if ((int) n.data == num) {
                 head = n.next;
                 System.out.println("Number " + num + " found and deleted.");
             } else {
                 while (n.next != null) {
-                    if ((int)n.next.data == num) {
+                    if ((int) n.next.data == num) {
                         n.next = n.next.next;
                         System.out.println("Number " + num + " found and deleted.");
                         break;
@@ -163,15 +162,15 @@ public class LinkedList<T> {
             System.out.println("List is empty. Cannot delete " + num);
         } else {
             Node n = head;
-            if ((int)n.data == num) {
+            if ((int) n.data == num) {
                 head = n.next;
                 System.out.println("Number " + num + " found and deleted.");
             }
             while (n.next != null) {
-                if ((int)n.next.data == num) {
+                if ((int) n.next.data == num) {
                     n.next = n.next.next;
                     System.out.println("Number " + num + " found and deleted.");
-                    if(n.next == null)
+                    if (n.next == null)
                         return;
                 }
                 n = n.next;
@@ -179,31 +178,31 @@ public class LinkedList<T> {
         }
     }
 
-    public void reverseIterative(Node head){
-        if(head == null || head.next == null){
+    public void reverseIterative(Node head) {
+        if (head == null || head.next == null) {
             System.out.println("List reversed iteratively.");
             return;
         }
         Node prev = null;
         Node current = head;
         Node next = null;
-        
-        while (current != null){
+
+        while (current != null) {
             next = current.next;
             current.next = prev;
             prev = current;
             current = next;
-        }        
+        }
         head = prev;
         System.out.println("List reversed iteratively.");
     }
-    
-    public void reverseRecursive(){
+
+    public void reverseRecursive() {
         head = reverseUtil(head, null);
     }
-    
-    private Node reverseUtil(Node current, Node prev){
-        if(current.next == null){
+
+    private Node reverseUtil(Node current, Node prev) {
+        if (current.next == null) {
             head = current;
             current.next = prev;
             return head;
@@ -213,71 +212,71 @@ public class LinkedList<T> {
         return reverseUtil(next, current);
     }
 
-    public int getSize(){
-        if(head==null)
+    public int getSize() {
+        if (head == null)
             return 0;
         int size = 1;
         Node temp = head;
-        while(temp.next!=null){
+        while (temp.next != null) {
             size++;
             temp = temp.next;
         }
         return size;
     }
 
-    public void displaySize(){
-        System.out.println("The size of the Linked List is: "+getSize());
+    public void displaySize() {
+        System.out.println("The size of the Linked List is: " + getSize());
     }
 
-    public void nFromLast(int n){
+    public void nFromLast(int n) {
         Node slow = head;
         Node fast = head;
-        int i=0;
-        while(i<n-1){
-            if(fast.next==null){
-                System.out.println("Not enough elements in the list to find "+n+ "th element from last.");
+        int i = 0;
+        while (i < n - 1) {
+            if (fast.next == null) {
+                System.out.println("Not enough elements in the list to find " + n + "th element from last.");
                 return;
-            }else{
-                fast=fast.next;
+            } else {
+                fast = fast.next;
                 i++;
             }
         }
-        while(fast!=null && fast.next!=null){
+        while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next;
         }
-        System.out.println("Value at "+n+"th element from last is: "+slow.data);
+        System.out.println("Value at " + n + "th element from last is: " + slow.data);
     }
 
-    public Node getMiddleElement(Node head){
-        if(head==null)
+    public Node getMiddleElement(Node head) {
+        if (head == null)
             return null;
         Node slow = head;
         Node fast = head.next;
-        while(fast!=null && fast.next!=null){
+        while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
         return slow;
     }
 
-    public void displayMiddleElement(){
-        System.out.println("Middle element is: "+getMiddleElement(head).data);
+    public void displayMiddleElement() {
+        System.out.println("Middle element is: " + getMiddleElement(head).data);
     }
 
-    public Node sort(){
-       return mergeSort(head);
+    public Node sort() {
+        return mergeSort(head);
     }
 
-    public Node sortedMerge(Node a, Node b){
+    public Node sortedMerge(Node a, Node b) {
         Node result = null;
 
-        if(a == null)
+        if (a == null)
             return b;
-        if(b == null)
+        if (b == null)
             return a;
 
-        if((int)a.data <= (int)b.data){
+        if ((int) a.data <= (int) b.data) {
             result = a;
             result.next = sortedMerge(a.next, b);
         } else {
@@ -287,8 +286,8 @@ public class LinkedList<T> {
         return result;
     }
 
-    private Node mergeSort(Node head){
-        if (head == null || head.next == null){
+    private Node mergeSort(Node head) {
+        if (head == null || head.next == null) {
             return head;
         } else {
             Node mid = getMiddleElement(head);
@@ -308,7 +307,7 @@ public class LinkedList<T> {
     /*
     Displays until the null pointer is reached. Does not consider the head data member of Linked List class but rather uses the head pointer passed.
      */
-    public void displayList(Node head){
+    public void displayList(Node head) {
         if (head == null) {
             System.out.println("The list is empty. Nothing to Display.");
         } else {
@@ -324,7 +323,7 @@ public class LinkedList<T> {
 
     public static void main(String[] args) {
         LinkedList<Integer> ll = new LinkedList<Integer>();
-        Integer[] a = {1,-2,-3,4,5,-6,7,-8};
+        Integer[] a = {1, -2, -3, 4, 5, -6, 7, -8};
         ll.appendArrayToFront(ll.head, a);
         ll.displayList(ll.head);
 //        Node sortedListHead = ll.sort();
@@ -334,3 +333,24 @@ public class LinkedList<T> {
     }
 }
 
+    Map<String, Integer> outsideFriendsCounts = new HashMap<>();
+    Iterator it2 = empDept.entrySet().iterator();
+    while(it2.hasNext()){
+            Map.Entry empDeptPair=(Map.Entry)it2.next();
+            Iterator it3=outsideFriends.entrySet().iterator();
+            while(it3.hasNext()){
+            Map.Entry friendsPair=(Map.Entry)it3.next();
+
+            if(empDept.get(friendsPair.getKey())!=empDept.get(friendsPair.getValue())){
+            int count=outsideFriendsCounts.containsValue(empDeptPair.getValue().toString())?outsideFriendsCounts.get(empDeptPair.getValue().toString()):0;
+            outsideFriendsCounts.put(empDeptPair.getValue().toString(),count+1);
+
+            System.out.println(count);
+            }
+            }
+            }
+
+
+
+
+            }
