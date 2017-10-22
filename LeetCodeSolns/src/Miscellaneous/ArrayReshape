@@ -1,0 +1,21 @@
+class Solution {
+    public int[][] matrixReshape(int[][] nums, int r, int c) {
+        int r1 = nums.length;
+        int c1 = nums[0].length;
+
+        if(r1*c1 != r*c)
+            return nums;
+
+        int[] whole = Arrays
+            .stream(nums)
+            .flatMapToInt(Arrays::stream)
+            .toArray();
+        int[][] reshaped = new int[r][c];
+
+        for(int i=0 ; i<r ; i++)
+            for(int j=0 ; j<c ; j++){
+                reshaped[i][j] = whole[j + i*c];
+            }
+        return reshaped;
+    }
+}

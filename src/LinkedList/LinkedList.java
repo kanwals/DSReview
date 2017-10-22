@@ -332,25 +332,3 @@ public class LinkedList<T> {
 //        ll.displayList(ll.head);
     }
 }
-
-    Map<String, Integer> outsideFriendsCounts = new HashMap<>();
-    Iterator it2 = empDept.entrySet().iterator();
-    while(it2.hasNext()){
-            Map.Entry empDeptPair=(Map.Entry)it2.next();
-            Iterator it3=outsideFriends.entrySet().iterator();
-            while(it3.hasNext()){
-            Map.Entry friendsPair=(Map.Entry)it3.next();
-
-            if(empDept.get(friendsPair.getKey())!=empDept.get(friendsPair.getValue())){
-            int count=outsideFriendsCounts.containsValue(empDeptPair.getValue().toString())?outsideFriendsCounts.get(empDeptPair.getValue().toString()):0;
-            outsideFriendsCounts.put(empDeptPair.getValue().toString(),count+1);
-
-            System.out.println(count);
-            }
-            }
-            }
-
-
-
-
-            }
