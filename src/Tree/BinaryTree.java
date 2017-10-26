@@ -3,6 +3,8 @@ package Tree;
 import Queue.QueueLL;
 import Stack.StackLL;
 
+import java.util.*;
+
 /**
  * Created by Gurkanwal on 8/2/2017.
  */
@@ -196,14 +198,36 @@ public class BinaryTree<T> {
 //        System.out.println();
 //        System.out.println("Level Order Traversal in Levels using Queue: "); tree.printLevelOrderInLevels(tree.root);
 //        System.out.println();
-        tree.printTree(tree.root);
-        tree.printInOrder(tree.root);
-        System.out.println();
-        tree.printPreOrder(tree.root);
-        System.out.println();
-        tree.printPostOrder(tree.root);
-        System.out.println();
-        tree.printInOrderWithoutRecusion(tree.root);
+//        tree.printTree(tree.root);
+//        tree.printInOrder(tree.root);
+//        System.out.println();
+//        tree.printPreOrder(tree.root);
+//        System.out.println();
+//        tree.printPostOrder(tree.root);
+//        System.out.println();
+//        tree.printInOrderWithoutRecusion(tree.root);
+
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(int p = 3; p<=9; p++){
+            if(p%2!=0)
+                arr.add(p);
+        }
+        System.out.println(Arrays.toString(arr.toArray(new Integer[arr.size()])));
+    }
+
+    static int[] oddNumbers(int l, int r) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(int i = l; i<=r; i++){
+            if(i%2!=0)
+                arr.add(i);
+        }
+
+        int[] array = new int[arr.size()];
+        ListIterator itr = arr.listIterator();
+        while(itr.hasNext()){
+            array[itr.nextIndex()] = (int)itr.next();
+        }
+        return array;
     }
 }
 
