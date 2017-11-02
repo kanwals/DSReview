@@ -24,8 +24,8 @@ public class QuickSortTest {
     public void QuickSortTest() {
         long startTime = System.currentTimeMillis();
 
-        QuickSort sorter = new QuickSort();
-        sorter.sort(numbers);
+        QuickSort sorter = new QuickSort(numbers);
+        sorter.sort();
 
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
