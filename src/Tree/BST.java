@@ -13,6 +13,19 @@ public class BST {
         return root;
     }
 
+    public boolean isEmpty(){
+        return size()==0;
+    }
+
+    public int size(){
+        return size(root);
+    }
+
+    private int size(BSTNode node){
+        if (node == null) return 0;
+        else return node.size;
+    }
+
     public void insert(int key){
 //        root = insert(root, key);
         root = insert(root, new BSTNode(null,key));
@@ -23,29 +36,31 @@ public class BST {
 
         if(key<x.key) x.left = insert(x.left,key);
         else if(key>x.key) x.right = insert(x.right, key);
+        x.size = 1 + size(x.left) + size(x.right);
         return x;
     }
 
     //NOTE: This code takes care of parent amendment as well while insertion, which is required by many applications of binary search trees such as finding nextLargest element.
-    private BSTNode insert(BSTNode x, BSTNode child){
-        if(x==null) return child;
+    private BSTNode insert(BSTNode node, BSTNode child){
+        if(node==null) return child;
 
-        if(child.key<x.key){
-            if(x.left == null){
-                child.parent = x;
-                x.left = child;
+        if(child.key<node.key){
+            if(node.left == null){
+                child.parent = node;
+                node.left = child;
             }
-            else x.left = insert(x.left, child);
+            else node.left = insert(node.left, child);
         }
         //NOTE: We should always store distinct keys in binary tree (NO equal to sign). If we need to store duplicate values, implement a counter on each node that contains the count value.
-        else if (child.key>x.key){
-            if(x.right == null){
-                child.parent = x;
-                x.right = child;
+        else if (child.key>node.key){
+            if(node.right == null){
+                child.parent = node;
+                node.right = child;
             }
-            else x.right = insert(x.right, child);
+            else node.right = insert(node.right, child);
         }
-        return x;
+        node.size = 1 + size(node.left) + size(node.right);
+        return node;
     }
 
     public void printPreOrder(){
@@ -115,6 +130,99 @@ public class BST {
         }
         return current.parent;
     }
+
+    public void deleteMin(){
+        deleteMin(root);
+    }
+
+    private BSTNode deleteMin(BSTNode node){
+        if(node.left==null) {
+            if(node.right!=null) node.right.parent = node.parent; //PARENT CODE
+            return node.right;
+        }
+        node.left = deleteMin(node.left);
+        node.size = 1 + size(node.left) + size(node.right);
+        return node;
+    }
+
+    public void deleteMax(){
+        deleteMax(root);
+    }
+
+    private BSTNode deleteMax(BSTNode node){
+        if(node.right == null) {
+            if(node.left!=null) node.left.parent = node.parent; //PARENT CODE
+            return node.left;
+        }
+        node.right = deleteMax(node.right);
+        node.size = 1 + size(node.left) + size(node.right);
+        return node;
+    }
+
+    public void delete(int key){
+        root = delete(root,key);
+    }
+
+    private BSTNode delete(BSTNode node, int x){
+        if(node == null) return null;
+        if(x<node.key) node.left = delete(node.left, x);
+        else if (x>node.key) node.right = delete(node.right, x);
+        else {
+            if(node.left==null) {
+                if(node.right != null) node.right.parent = node.parent; //PARENT CODE
+                return node.right;
+            }
+            if(node.right==null) {
+                if(node.left != null) node.left.parent = node.parent; //PARENT CODE
+                return node.left;
+            }
+            BSTNode temp = node;
+            node = findMin(temp.right);
+            node.right = deleteMin(temp.right);
+            node.left = temp.left;
+            node.parent = temp.parent; //PARENT CODE
+
+            //PARENT CODE
+            if(node.left != null) node.left.parent = node;
+            if(node.right != null) node.right.parent = node;
+        }
+        node.size = 1 + size(node.left) + size(node.right);
+        return node;
+    }
+
+    //Get number of keys with values <= val
+    public int rank(int val){
+        return rank(root, val);
+    }
+
+    private int rank(BSTNode node, int val){
+        if(node == null) return 0;
+        if(val>node.key)
+            return 1+size(node.left)+rank(node.right,val);
+        else if(val<node.key)
+            return rank(node.left,val);
+        else
+            return 1 + size(node.left);
+    }
+
+    public BSTNode lowestCommonAncestor(int l, int r){
+        return lowestCommonAncestor(root,l,r);
+    }
+
+    /* NOTE: Two other ways:
+    1. via HashMap: store all parents of one of the nodes, check if any of the parents of the other other node is there. If yes, return, else don't.
+    2. via recursion: same as iterative*/
+    public BSTNode lowestCommonAncestor(BSTNode node, int l, int r){
+        if(node == null) return null;
+        while (node!=null){
+            if(node.key>l && node.key>r)
+                node = node.left;
+            else if(node.key<l && node.key<r)
+                node = node.right;
+            else break;
+        }
+        return node;
+    }
 }
 
 class BSTCaller{
@@ -139,12 +247,23 @@ class BSTCaller{
         System.out.println(bst.nextLarger(bst.findMin()).key);
 
         //Way to get sorted elements from binary tree: will be nlogn if the tree is balanced. AVL trees!
-        int minValCurrent = 0;
-        for(int i=0; i<keys.length-1; i++){
-            if (i==0)  minValCurrent = bst.findMin().key;
-            System.out.print(minValCurrent+" ");
-            minValCurrent = bst.nextLarger(bst.find(minValCurrent)).key;
-        }
-        System.out.print(minValCurrent+" ");
+//        int minValCurrent = 0;
+//        for(int i=0; i<keys.length-1; i++){
+//            if (i==0)  minValCurrent = bst.findMin().key;
+//            System.out.print(minValCurrent+" ");
+//            minValCurrent = bst.nextLarger(bst.find(minValCurrent)).key;
+//        }
+//        System.out.println(minValCurrent+" ");
+//        System.out.println("size: "+bst.size());
+//        System.out.println("Rank 7: "+bst.rank(7));
+//        bst.delete(5);
+//        bst.printInOrder();
+//        System.out.println("size: "+bst.size());
+//        System.out.println("Rank 7: "+bst.rank(7));
+
+        //NOTE: If l>bst.max() or r<bst.min() then this will throw null pointer exception
+        System.out.println(bst.lowestCommonAncestor(-1,0).key);
+
+
     }
 }

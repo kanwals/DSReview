@@ -7,11 +7,13 @@ public class BSTNode {
     BSTNode parent;
     BSTNode left;
     BSTNode right;
+    int size;
 
     public BSTNode(BSTNode parent, int key){
         this.parent = parent;
         this.key = key;
         this.left = null;
         this.right = null;
+        this.size = 1;
     }
 }
