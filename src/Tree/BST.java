@@ -1,6 +1,7 @@
 package Tree;
 
-import java.util.Random;
+
+import java.util.*;
 
 public class BST {
     BSTNode root;
@@ -223,6 +224,23 @@ public class BST {
         }
         return node;
     }
+
+    //finds all the nodes in the BST within the range [l,r] starting the search at "node"
+    private ArrayList<Integer> nodeList(BSTNode node, ArrayList<Integer> list, int l, int r){
+        if(node==null)
+            return null;
+        if(node.key>=l && node.key<=r) list.add(node.key);
+        if(node.key>=l) nodeList(node.left, list, l, r);
+        if(node.key<=r) nodeList(node.right, list, l, r);
+        return list;
+    }
+
+    public int[] list(int low, int high){
+        BSTNode lca = lowestCommonAncestor(low, high);
+        ArrayList<Integer> list = new ArrayList<>();
+        list = nodeList(lca, list, low, high);
+        return list.stream().mapToInt(i -> i).toArray();
+    }
 }
 
 class BSTCaller{
@@ -247,13 +265,13 @@ class BSTCaller{
         System.out.println(bst.nextLarger(bst.findMin()).key);
 
         //Way to get sorted elements from binary tree: will be nlogn if the tree is balanced. AVL trees!
-//        int minValCurrent = 0;
-//        for(int i=0; i<keys.length-1; i++){
-//            if (i==0)  minValCurrent = bst.findMin().key;
-//            System.out.print(minValCurrent+" ");
-//            minValCurrent = bst.nextLarger(bst.find(minValCurrent)).key;
-//        }
-//        System.out.println(minValCurrent+" ");
+        int minValCurrent = 0;
+        for(int i=0; i<keys.length-1; i++){
+            if (i==0)  minValCurrent = bst.findMin().key;
+            System.out.print(minValCurrent+" ");
+            minValCurrent = bst.nextLarger(bst.find(minValCurrent)).key;
+        }
+        System.out.println(minValCurrent+" ");
 //        System.out.println("size: "+bst.size());
 //        System.out.println("Rank 7: "+bst.rank(7));
 //        bst.delete(5);
@@ -262,8 +280,9 @@ class BSTCaller{
 //        System.out.println("Rank 7: "+bst.rank(7));
 
         //NOTE: If l>bst.max() or r<bst.min() then this will throw null pointer exception
-        System.out.println(bst.lowestCommonAncestor(-1,0).key);
-
-
+//        System.out.println(bst.lowestCommonAncestor(-1,0).key);
+        System.out.println("=====================");
+        System.out.printf(Arrays.toString(bst.list(6,8)));
     }
+
 }
