@@ -66,10 +66,10 @@ public class Heap {
     }
 
     private void heapifyDown(int vulnerableIndex){
-        if(2*vulnerableIndex + 2 > heapLength)
+        if(2*vulnerableIndex + 2 > heapLength) // has no child
             return;
         int potentialChildIndexForSwapping = -1;
-        if(2*vulnerableIndex + 2 < heapLength){
+        if(2*vulnerableIndex + 2 < heapLength){ // has two children
             //check which of the childs is smaller, and swap with that
             int leftChildIndex = 2*vulnerableIndex + 1;
             int rightChildIndex = 2*vulnerableIndex + 2;
@@ -78,7 +78,7 @@ public class Heap {
             else
                 potentialChildIndexForSwapping = rightChildIndex;
         }
-        else if(2*vulnerableIndex + 2 == heapLength){
+        else if(2*vulnerableIndex + 2 == heapLength){ // has one child
             potentialChildIndexForSwapping = 2*vulnerableIndex + 1;
         }
         if(H[potentialChildIndexForSwapping]<H[vulnerableIndex]){

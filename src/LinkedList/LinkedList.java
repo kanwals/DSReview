@@ -193,7 +193,7 @@ public class LinkedList<T> {
             prev = current;
             current = next;
         }
-        head = prev;
+        this.head = prev;
         System.out.println("List reversed iteratively.");
     }
 

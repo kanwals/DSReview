@@ -1,6 +1,7 @@
 package Tree;
 
 
+import javax.swing.tree.TreeNode;
 import java.util.*;
 
 public class BST {
@@ -225,6 +226,21 @@ public class BST {
         return node;
     }
 
+    public BSTNode invertTree(BSTNode root) {
+        if(root==null)
+            return null;
+        if(root.left==null||root.right==null){
+            if(root.left==null) root.left = root.right;
+            else root.right = root.left;
+            return root;
+        }
+        else{
+            root.left = invertTree(root.right);
+            root.right = invertTree(root.left);
+        }
+        return root;
+    }
+
     //finds all the nodes in the BST within the range [l,r] starting the search at "node"
     private ArrayList<Integer> nodeList(BSTNode node, ArrayList<Integer> list, int l, int r){
         if(node==null)
@@ -241,6 +257,50 @@ public class BST {
         list = nodeList(lca, list, low, high);
         return list.stream().mapToInt(i -> i).toArray();
     }
+
+    public HashMap<BSTNode,BSTNode> inOrder(BSTNode node, HashMap<BSTNode,BSTNode> parent){
+        if(node==null)
+            return null;
+        if(node.left!=null) parent.put(node.left,node);
+        inOrder(node.left,parent);
+        if(node.right!=null) parent.put(node.right,node);
+        inOrder(node.right,parent);
+        return parent;
+    }
+
+    public List<List<Integer>> findLeaves(BSTNode root){
+        List<List<Integer>> list = new LinkedList<>();
+        findLeavesHelper(root, list);
+        return list;
+    }
+
+    private int findLeavesHelper(BSTNode node, List<List<Integer>> list){
+        if(node==null) return -1;
+        int depth = 1 + Math.max(findLeavesHelper(node.left, list),findLeavesHelper(node.right, list));
+        if(depth>=list.size()) list.add(depth, new ArrayList<Integer>());
+        list.get(depth).add(node.key);
+        return depth;
+    }
+
+    // BAD implementation. Does not preserve vertical order. Fucking stupid. 
+    public List<List<Integer>> verticalOrderTraversal(){
+        TreeMap<Integer,List<Integer>> map = new TreeMap<Integer,List<Integer>>();
+        verticalOrderTraversalHelper(map, root, 0);
+        return new ArrayList<>(map.values());
+    }
+
+    private void verticalOrderTraversalHelper(TreeMap<Integer,List<Integer>> map, BSTNode node, int hd){
+        if(node == null) return;
+        verticalOrderTraversalHelper(map, node.left, hd-1);
+        if(map.containsKey(hd)){
+            map.get(hd).add(node.key);
+        } else{
+            ArrayList<Integer> al = new ArrayList<Integer>();
+            al.add(node.key);
+            map.put(hd,al);
+        }
+        verticalOrderTraversalHelper(map, node.right, hd+1);
+    }
 }
 
 class BSTCaller{
@@ -255,23 +315,29 @@ class BSTCaller{
         for(int key: keys){
             bst.insert(key);
         }
-
-        System.out.print("PRE ORDER: "); bst.printPreOrder();
-        System.out.println();
-        System.out.print("IN ORDER: "); bst.printInOrder();
-        System.out.println();
-        System.out.print("POST ORDER: "); bst.printPostOrder();
-        System.out.println();
-        System.out.println(bst.nextLarger(bst.findMin()).key);
+        HashMap<BSTNode,BSTNode> parent = new HashMap<>();
+//        parent = bst.inOrder(bst.root,parent);
+        System.out.println(bst.verticalOrderTraversal());
+//        BSTNode root = bst.invertTree(bst.root);
+//        System.out.println(bst.findLeaves(bst.root));
+//        System.out.println(parent);
+//        System.out.println(bst.calculate("1+6/3"));
+//        System.out.print("PRE ORDER: "); bst.printPreOrder();
+//        System.out.println();
+//        System.out.print("IN ORDER: "); bst.printInOrder();
+//        System.out.println();
+//        System.out.print("POST ORDER: "); bst.printPostOrder();
+//        System.out.println();
+//        System.out.println(bst.nextLarger(bst.findMin()).key);
 
         //Way to get sorted elements from binary tree: will be nlogn if the tree is balanced. AVL trees!
-        int minValCurrent = 0;
-        for(int i=0; i<keys.length-1; i++){
-            if (i==0)  minValCurrent = bst.findMin().key;
-            System.out.print(minValCurrent+" ");
-            minValCurrent = bst.nextLarger(bst.find(minValCurrent)).key;
-        }
-        System.out.println(minValCurrent+" ");
+//        int minValCurrent = 0;
+//        for(int i=0; i<keys.length-1; i++){
+//            if (i==0)  minValCurrent = bst.findMin().key;
+//            System.out.print(minValCurrent+" ");
+//            minValCurrent = bst.nextLarger(bst.find(minValCurrent)).key;
+//        }
+//        System.out.println(minValCurrent+" ");
 //        System.out.println("size: "+bst.size());
 //        System.out.println("Rank 7: "+bst.rank(7));
 //        bst.delete(5);
@@ -281,8 +347,8 @@ class BSTCaller{
 
         //NOTE: If l>bst.max() or r<bst.min() then this will throw null pointer exception
 //        System.out.println(bst.lowestCommonAncestor(-1,0).key);
-        System.out.println("=====================");
-        System.out.printf(Arrays.toString(bst.list(6,8)));
+//        System.out.println("=====================");
+//        System.out.printf(Arrays.toString(bst.list(6,8)));
     }
 
 }
